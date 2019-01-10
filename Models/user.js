@@ -21,16 +21,16 @@ const usersSchema = new Schema({
     }
 });
 
-usersSchema.methods.hashPassword = function(){
+const User = module.exports = mongoose.model("User", usersSchema);
+
+User.hashPassword = function(user, cb){
     bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(this.password, salt, function(err, hash) {
+        bcrypt.hash(user.password, salt, function(err, hash) {
             if(err) throw err;
             else{
-                this.password = hash;
+                user.password = hash;
+                cb(user);
             }
         });
     });
 };
-
-const User = module.exports = mongoose.model("User", usersSchema);
-

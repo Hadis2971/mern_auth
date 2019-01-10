@@ -12,17 +12,25 @@ router.post("/register", (req, res, next) => {
         return res.status(400).json(errors);
     }
 
-    let newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
-    });
-
-    newUser.hashPassword();
-    newUser.save()
-    .then((err, user) => res.json(user))
+    User.findOne({email: req.body.email})
+    .then(user => {
+        if(user){
+            res.status(400).json({Registration_Error: "Email Already in Use"});
+        }else{
+            let newUser = new User({
+                name: req.body.name,
+                email: req.body.email,
+                password: req.body.password
+            });
+        
+            User.hashPassword(newUser, (newUser) => {
+                newUser.save()
+                .then((user) => res.json(user))
+                .catch(next);
+            });        
+        }
+    })
     .catch(next);
-
 });
 
 router.post("/login", (req, res) => {
