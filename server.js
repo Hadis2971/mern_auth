@@ -1,4 +1,5 @@
-const express = require("express");
+const express  = require("express");
+const passport = require("passport"); 
 
 const app  = express();
 const port = (process.env.PORT || 5000);
@@ -13,6 +14,9 @@ require("./DB").setConnection()
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+
+app.use(passport.initialize());
+require("./Config/passportConfig")(passport);
 
 app.use("/api/auth", usersRouter);
 app.use(clientErrorHandler);
