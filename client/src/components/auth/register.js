@@ -16,12 +16,16 @@ class Register extends React.Component {
         evt.preventDefault();
 
         
-        let name = this.state.name;
-        let email = this.state.email;
-        let password = this.state.password;
-        let password2 = this.state.password2;
+        const userData = {
+            name: this.state.name.join(""),
+            email: this.state.email.join(""),
+            password: this.state.password.join(""),
+            password2: this.state.password2.join("")
+       }
 
-        console.log(name, email, password, password2);
+       
+
+       console.log(userData);
     };
 
     render(){

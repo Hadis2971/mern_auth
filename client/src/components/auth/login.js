@@ -13,10 +13,14 @@ class Login extends React.Component {
     formSubmitHandler = (evt) => {
         evt.preventDefault();
 
-        const email = this.state.email;
-        const password = this.state.password;
+        const userData = {
+             email: this.state.email.join(""),
+             password: this.state.password.join("")
+        }
 
-        console.log(email, password);
+        
+
+        console.log(userData);
     };
 
     render(){
