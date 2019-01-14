@@ -45,7 +45,9 @@ export const login = (userData, history) => dispatch => {
 export const logout = () => dispatch => {
     localStorage.removeItem("auth_token");
     setAuthToken(false);
+    
     dispatch({
         type: AUTH_LOGOUT
     });
+    window.location.href = "/login";
 };
