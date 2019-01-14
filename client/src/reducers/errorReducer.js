@@ -6,7 +6,7 @@ const errorReducer = (state = initialState, action) => {
         case(AUTH_ERROR):
         return action.payload;
         default: return state;
-    };
+    }
 };
 
 export default errorReducer;

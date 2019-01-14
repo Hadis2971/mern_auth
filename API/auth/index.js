@@ -1,11 +1,19 @@
 const express     = require("express");
 const router      = express.Router();
 const jwt         = require("jsonwebtoken");
+const bcrypt      = require("bcryptjs");
 const secretOrKey = require("../../Config/index").secretOrKey;
 const User    = require("../../Models/user");
 
 const registerValidation = require("../../Validation/auth/registerValidator");
 const loginValidation    = require("../../Validation/auth/loginValidator");
+
+router.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    next();
+});
 
 router.post("/register", (req, res, next) => {
     const { errors, isValid } = registerValidation(req.body);
@@ -47,8 +55,8 @@ router.post("/login", (req, res) => {
         if(!user){
             return res.status(400).json({Login_Error: "Email Not Found!!!"});
         }else{
-            bcrypt.compare(req.body.password, user.password, function(err, res) {
-                if(!user){
+            bcrypt.compare(req.body.password, user.password, function(err, isMatch) {
+                if(!isMatch){
                     return res.status(400).json({Login_Error: "Wrong Password!!!"});
                 }else{
                     const payload = {

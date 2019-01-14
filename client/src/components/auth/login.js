@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { login } from "../../actions/authActions";
 
 class Login extends React.Component {
     state = {
@@ -20,7 +22,7 @@ class Login extends React.Component {
 
         
 
-        console.log(userData);
+        this.props.login(userData, this.props.history);
     };
 
     render(){
@@ -39,4 +41,10 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: (userData, history) => {dispatch(login(userData, history))}
+    }
+};
+
+export default connect(null, mapDispatchToProps)(Login);

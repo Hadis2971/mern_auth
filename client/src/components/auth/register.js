@@ -1,4 +1,6 @@
 import React from "react";
+import { auth } from "../../actions/authActions";
+import { connect } from "react-redux";
 
 class Register extends React.Component {
     state = {
@@ -25,7 +27,7 @@ class Register extends React.Component {
 
        
 
-       console.log(userData);
+       this.props.auth(userData, this.props.history);
     };
 
     render(){
@@ -50,4 +52,12 @@ class Register extends React.Component {
     }
 }
 
-export default Register;
+const mapStateToProps = (stata) => {};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        auth: (userData, history) => dispatch(auth(userData, history))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(Register);

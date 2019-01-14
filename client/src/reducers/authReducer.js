@@ -16,12 +16,13 @@ const authReducer = (state = initialState, action) => {
         };
 
         case(AUTH_SUCCESS):
+        console.log(action);
         return state = {
             ...state,
             token: action.token,
             user: action.user,
             loading: false,
-            isAuthenticated: this.token !== null
+            isAuthenticated: true
         };
 
         case(AUTH_FAIL):
